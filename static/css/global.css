@@ -49,3 +49,28 @@ main {
     transition: all 300ms;
 
 }
+
+
+.btn_sair {
+
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 4px 8px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    min-width: 120px;
+    text-align: center;
+
+}
+
+.btn_sair:hover {
+
+
+    background-color: rgb(224, 3, 3);
+    color: white;
+    transition: all 300ms;
+
+}

@@ -2,13 +2,15 @@
 {% csrf_token %}
 
 {% block content %} 
-<h1>Lista de Imagens</h1>
+
+<h1>Lixeira</h1>
     
 <ul>
+    
     {% for image in images %}
         <li>
+            {{ image.titulo }}: <br>
             <img src="{{ image.imagem.url }}" alt="{{ image.titulo }}" width="100" height="100">
-            {{ image.titulo }}
             <form method="post" action="{% url 'lixeira' %}">
                 {% csrf_token %}
                 <input type="hidden" name="image_id" value="{{ image.id }}">
@@ -22,10 +24,8 @@
 {% endblock %}
 
 {% comment %} <html>
-<head>
-    <title>Listar Imagens</title>
-</head>
+
 <body>
     
 </body>
-</html> {% endcomment %}
+</html>  {% endcomment %}

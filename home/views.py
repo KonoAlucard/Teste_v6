@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from rolepermissions.roles import assign_role
 from rolepermissions.decorators import has_role_decorator
+from django.contrib.auth.decorators import user_passes_test
 from .forms import ImageUploadForm
 from .models import Image
 import boto3
@@ -54,7 +55,7 @@ def excluir_imagem(request):
             images.ativo = False
             images.save()
             
-            return redirect('galeria')
+            return redirect('excluir_imagem')
         except Image.DoesNotExist:
             
             pass
@@ -93,17 +94,16 @@ def lixeira(request):
     return render(request, 'lixeira.html', {'images': images})
 
 
-
-@login_required(login_url="login")
+@login_required(login_url="login/")
 def galeria(request):
     images = Image.objects.filter(ativo=True)
-    return render(request, "galeria.html", {'images': images})
+    return render(request, "galeria.html", {'images': images},)
 
     
 
 def signin (request):
    if request.user.is_authenticated:
-       return redirect('view_images')
+       return redirect('galeria')
    if request.method == "GET":
       return render (request,"login.html")
    else:

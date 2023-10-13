@@ -11,8 +11,22 @@
 
 <body>
     <header> 
-        <a href="/sair" class="btn">Logout<a/>
-        <a href="/home" class="btn">Enviar imagem</a>
+        {% if request.user.is_superuser == 1 %}
+            <a href="/home/" class="btn">Enviar imagem</a>
+            {% if request.path != '/galeria/' %}
+            <a href="/galeria/" class="btn">Galeria</a>
+            {% endif %}
+            {% if request.path != '/excluir_imagem/' %}
+            <a href="/excluir_imagem/" class="btn">Excluir Imagem</a>
+            {% endif %}
+            {% if request.path != '/lixeira/' %}
+            <a href="/lixeira/" class="btn">Lixeira</a>
+            {% endif %}
+            
+        {% endif %}
+        <a href="/sair" class="btn_sair">Sair<a/>
+
+
     </header>
     <main>
     {% block content %}

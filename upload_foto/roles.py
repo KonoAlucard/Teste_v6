@@ -1,5 +1,7 @@
 from rolepermissions.roles import AbstractUserRole
 
+
+
 class Noivos(AbstractUserRole):
     available_permissions = {'enviar_fotos': True, 'ver_galeria': True}
 

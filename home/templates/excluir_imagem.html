@@ -3,12 +3,14 @@
 
 
 {% block content %}
+<h1>Excluir Imagem</h1>
 
 <ul>
+   
     {% for image in images %}
         <li>
+            {{ image.titulo }}:<br>
             <img src="{{ image.imagem.url }}" alt="{{ image.titulo }}" width="100" height="100">
-            {{ image.titulo }}
             <form method="post" action="{% url 'excluir_imagem' %}">
                 {% csrf_token %}
                 <input type="hidden" name="image_id" value="{{ image.id }}">
