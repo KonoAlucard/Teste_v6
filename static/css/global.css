@@ -1,0 +1,51 @@
+body {
+
+    margin: 0;
+    padding: 0;
+
+}
+
+
+header {
+
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    height: 32px;
+    position: fixed;
+    inset: 0;
+    background-color: gray;
+
+}
+
+main {
+
+   margin-top:  2rem;
+   padding: 1rem;
+
+}
+
+.btn {
+
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 4px 8px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    min-width: 120px;
+    text-align: center;
+
+}
+
+.btn:hover {
+
+
+    background-color: rgb(197, 128, 0);
+    color: white;
+    transition: all 300ms;
+
+}

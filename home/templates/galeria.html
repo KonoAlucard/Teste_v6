@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% csrf_token %}
+
+{% load static %}
+
+{% block content %} 
+    <h1>Galeria</h1>
+    {% for image in images %}
+    <p>Nome: {{ image.titulo }} </p>
+    <p>ID: {{ image.id }}</p>
+    <img src="{{ image.imagem.url }}" alt="{{ image.title }}" width="100" height="100">
+    {% endfor %}
+{% endblock %}
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html> {% endcomment %}
