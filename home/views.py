@@ -1,22 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from PIL import Image
-import os
-from django.conf import settings
-from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as login_django
 from home.models import UserCreationForm
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required   
-from django.contrib.auth.decorators import permission_required
 from rolepermissions.roles import assign_role
 from rolepermissions.decorators import has_role_decorator
-from django.contrib.auth.decorators import user_passes_test
 from .forms import ImageUploadForm
 from .models import Image
-import boto3
+import unittest
+
 
 @login_required(login_url="login")
 @has_role_decorator('noivos')
@@ -37,7 +32,7 @@ def home(request):
 def excluir_imagem(request):
     images = Image.objects.filter(ativo=True)
    #  images = Image.objects.all()
-    bucket_name = 'konoalucardtesteimagens'
+    # bucket_name = 'konoalucardtesteimagens'
     
     if request.method == "POST":
         image_id = request.POST.get("image_id")
@@ -113,7 +108,7 @@ def signin (request):
       user = authenticate(username=username, password=password)
       if user:
        login_django(request, user)
-       return redirect ('galeria')
+       return redirect('galeria')
          
       #    return redirect ('home')
    return render (request, "login.html")
@@ -140,7 +135,7 @@ def register(request):
           if is_superuser == 1:
              assign_role(user2, 'noivos')
           user2.save()
-          return redirect ('login') 
+          return redirect('login') 
        else:
           return render(request, 'register.html') 
     else:
