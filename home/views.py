@@ -16,16 +16,16 @@ import unittest
 @login_required(login_url="login")
 @has_role_decorator('noivos')
 def home(request):
-    if request.method == 'POST':
+    # if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')
 
-    else:
-        form = ImageUploadForm()
+        else:
+            form = ImageUploadForm()
 
-    return render(request, 'home.html', {'form': form})
+        return render(request, 'home.html', {'form': form})
 
 @login_required(login_url="login")
 @has_role_decorator('noivos')
