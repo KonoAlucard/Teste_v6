@@ -91,6 +91,9 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
 
@@ -151,3 +154,7 @@ AWS_SECRET_ACCESS_KEY = 'twdEdM5VrtxEsbUyof1S0Of9Mz4p4D+R7Ga+6laQ'
 AWS_STORAGE_BUCKET_NAME = 'konoalucardtesteimagens'
 AWS_S3_REGION_NAME = 'us-east-2'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']

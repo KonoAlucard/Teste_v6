@@ -11,12 +11,12 @@ from rolepermissions.decorators import has_role_decorator
 from .forms import ImageUploadForm
 from .models import Image
 import unittest
+import cgi, cgitb
 
 
 @login_required(login_url="login")
 @has_role_decorator('noivos')
 def home(request):
-    # if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
@@ -27,8 +27,7 @@ def home(request):
 
         return render(request, 'home.html', {'form': form})
 
-@login_required(login_url="login")
-@has_role_decorator('noivos')
+
 def excluir_imagem(request):
     images = Image.objects.filter(ativo=True)
    #  images = Image.objects.all()
@@ -38,55 +37,52 @@ def excluir_imagem(request):
         image_id = request.POST.get("image_id")
         # essa parte é pra excluir a imagem do banco do amazon s3, mas a perm nn ta direito pq teria q mudar a região do bucket
         # s3 = boto3.client('s3', aws_access_key_id='AKIA2BSQBTM5CT3PDVPC', aws_secret_access_key='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')
+        excluirImagemPorId(image_id)
+
         
-        try:
-            images = Image.objects.get(id=image_id)
-            
-            # essa parte é pra excluir a imagem do banco do amazon s3, mas a perm nn ta direito pq teria q mudar a região do bucket
-            # s3.delete_object(Bucket=bucket_name, Key=images.imagem.name)
-            
-            # caso queria deletar a imagem direto ao inves de mandar pra lixeira
-            # images.delete()
-            images.ativo = False
-            images.save()
-            
-            return redirect('excluir_imagem')
-        except Image.DoesNotExist:
-            
-            pass
+    return render(request, 'galeria.html', {'images': images})
+
+
+def excluirImagemPorId(id):
+    try:
+        images = Image.objects.get(id=id)
         
-    return render(request, 'excluir_imagem.html', {'images': images})
+        # essa parte é pra excluir a imagem do banco do amazon s3, mas a perm nn ta direito pq teria q mudar a região do bucket
+        # s3.delete_object(Bucket=bucket_name, Key=images.imagem.name)
+        
+        # caso queria deletar a imagem direto ao inves de mandar pra lixeira
+        # images.delete()
+        images.ativo = False
+        images.save()
+        
+        return redirect('excluir_imagem')
+    except Image.DoesNotExist:
+        
+        pass
 
-
-
-
-@login_required(login_url="login")
-@has_role_decorator('noivos')
 def lixeira(request):
     images = Image.objects.filter(ativo=False)
-   #  images = Image.objects.all()
-    bucket_name = 'konoalucardtesteimagens'
+   
     
     if request.method == "POST":
         image_id = request.POST.get("image_id")
-        # essa parte é pra excluir a imagem do banco do amazon s3, mas a perm nn ta direito pq teria q mudar a região do bucket
-        # s3 = boto3.client('s3', aws_access_key_id='AKIA2BSQBTM5CT3PDVPC', aws_secret_access_key='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')
-        
-        try:
-            images = Image.objects.get(id=image_id)
-            
-            # essa parte é pra excluir a imagem do banco do amazon s3, mas a perm nn ta direito pq teria q mudar a região do bucket
-            # s3.delete_object(Bucket=bucket_name, Key=images.imagem.name)
+        restaurarImagemPorId(image_id)
+    return render(request, 'lixeira.html', {'images': images})
 
+
+def restaurarImagemPorId (id):
+        try:
+            images = Image.objects.get(id=id)
             images.ativo = True
             images.save()
             
             return redirect('galeria')
+        
         except Image.DoesNotExist:
             
             pass
         
-    return render(request, 'lixeira.html', {'images': images})
+    
 
 
 @login_required(login_url="login/")

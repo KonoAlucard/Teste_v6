@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="{% static 'css/script.js' %}"></script>
 <html lang="en">
 <link rel="stylesheet" href="{% static 'css/global.css' %}">
 
@@ -16,9 +18,6 @@
             {% if request.path != '/galeria/' %}
             <a href="/galeria/" class="btn">Galeria</a>
             {% endif %}
-            {% if request.path != '/excluir_imagem/' %}
-            <a href="/excluir_imagem/" class="btn">Excluir Imagem</a>
-            {% endif %}
             {% if request.path != '/lixeira/' %}
             <a href="/lixeira/" class="btn">Lixeira</a>
             {% endif %}
@@ -32,6 +31,7 @@
     {% block content %}
     {% endblock %}
     </main>
+
 </body>
 
 </html>
